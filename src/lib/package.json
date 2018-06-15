@@ -1,0 +1,21 @@
+{
+  "name": "@webfactor/ionic-image-picker-directive",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "url"
+  },
+  "keywords": [
+    "angular"
+  ],
+  "license": "MIT",
+  "main": "./bundles/ionic-image-picker-directive.umd.js",
+  "es2015": "./esm2015/ionic-image-picker-directive.js",
+  "module": "./esm5/ionic-image-picker-directive.es5.js",
+  "typings": "./ionic-image-picker-directive.d.ts",
+  "peerDependencies": {
+    "@angular/core": "^5.0.0",
+    "@angular/common": "^5.0.0",
+    "@angular/http": "^5.0.0"
+  }
+}
