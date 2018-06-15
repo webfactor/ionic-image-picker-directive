@@ -1,0 +1,41 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-buttons left>
+      <button ion-button icon-only (click)="cancel()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="acceptImage()" *ngIf="allImageUrls.length">
+        <ion-icon name="checkmark"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>{{'pickImagesPage.title' | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content >
+  <div>{{'pickImagesPage.example' | translate}}</div>
+  <img src="{{exampleImageUrl}}" class="example" />
+  <div>{{infoText}}</div>
+
+
+  <div bottom ion-grid>
+    <ion-row>
+      <ion-col>
+        <button ion-button full (click)="takeImage()" *ngIf="imageUrls">{{'pickImagesPage.takeNewImage' | translate}}</button>
+        <button ion-button full (click)="takeImage()" *ngIf="!imageUrls">{{'pickImagesPage.takeImage' | translate}}</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button full (click)="pickImage()">{{'pickImagesPage.pickImage' | translate}}</button>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div *ngFor="let allImageUrl of allImageUrls" (click)="deleteImage(allImageUrl)">
+    <img src="{{allImageUrl}}"/>
+  </div>
+</ion-content>
