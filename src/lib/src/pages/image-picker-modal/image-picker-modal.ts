@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CameraOptions } from '@ionic-native/camera';
 import { IonicPage, NavParams, ViewController } from 'ionic-angular';
 
-import { ImageServiceProvider } from '../../providers/image-service/image-service';
+import { ImageServiceProvider } from '../../providers/image-service';
 
 @IonicPage()
 @Component({
@@ -24,9 +24,7 @@ export class ImagePickerModalPage {
     public navParams: NavParams,
     private imageService: ImageServiceProvider
   ) {
-    this.exampleImageUrl = this.navParams.data.exampleImageUrl;
-    this.infoText = this.navParams.data.infoText;
-    this.type = this.navParams.data.type;
+    this.getInputs();
   }
 
   dismiss(data: any) {
@@ -67,5 +65,12 @@ export class ImagePickerModalPage {
 
   deleteImage(imageUrl: String): void {
     this.allImageUrls.splice(this.allImageUrls.indexOf(imageUrl), 1);
+  }
+
+  getInputs(): void {
+    this.exampleImageUrl = this.navParams.data.exampleImageUrl;
+    this.infoText = this.navParams.data.infoText;
+    this.type = this.navParams.data.type;
+    this.options = this.navParams.data.options;
   }
 }

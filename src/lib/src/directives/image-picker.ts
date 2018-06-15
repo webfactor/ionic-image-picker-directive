@@ -1,35 +1,34 @@
 import { Directive, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import { CameraOptions } from '@ionic-native/camera';
+import { ImagePickerOptions } from '@ionic-native/image-picker';
 import { ModalController } from 'ionic-angular';
 
 import { ImagePickerModalPage } from '../pages/image-picker-modal/image-picker-modal';
 
-@Directive({ selector: 'button[wf-position-picker]' })
+@Directive({ selector: 'button[wf-image-picker]' })
 export class PositionPickerDirective {
-  @Output() positionPick = new EventEmitter();
+  @Output() imageUrls = new EventEmitter();
 
   @Input() title?: string = 'Position auswählen';
-  @Input() zoom?: number = 13;
-  @Input() streetViewControl?: boolean = false;
-  @Input() zoomControl?: boolean = false;
-  @Input() backIcon?: string = 'arrow-back';
-  @Input() acceptIcon?: string = 'checkmark';
-  @Input() saveOnClose?: boolean = false;
+  @Input() exampleImageUrl?: string = '';
+  @Input() infoText?: string = '';
+  @Input() optionsCamera?: CameraOptions = null;
+  @Input() optionsImagePicker?: ImagePickerOptions = null;
 
   constructor(private modalCtrl: ModalController) {}
 
   @HostListener('click')
   presentPositionPickerModal() {
     let modal = this.modalCtrl.create(ImagePickerModalPage, {
-      backIcon: this.backIcon,
-      acceptIcon: this.acceptIcon,
       title: this.title,
-      zoom: this.zoom,
-      steetViewControl: this.streetViewControl,
-      zoomControl: this.zoomControl,
-      saveOnClose: this.saveOnClose
+
+      exampleImageUrl: this.exampleImageUrl,
+      infoText: this.infoText,
+      optionsCamera: this.optionsCamera,
+      optionsImagePicker: this.optionsImagePicker
     });
     modal.onDidDismiss(data => {
-      if (data) this.positionPick.emit(data);
+      if (data) this.imageUrls.emit(data);
     });
     modal.present();
   }
