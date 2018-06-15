@@ -16,6 +16,8 @@
   "peerDependencies": {
     "@angular/core": "^5.0.0",
     "@angular/common": "^5.0.0",
-    "@angular/http": "^5.0.0"
+    "@angular/http": "^5.0.0",
+    "@ionic-native/camera": "^4.7.0",
+    "com.synconset.imagepicker": "^2.1.10"
   }
 }
