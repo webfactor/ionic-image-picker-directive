@@ -7,7 +7,7 @@ import { ImagePickerModalPage } from '../pages/image-picker-modal/image-picker-m
 
 @Directive({ selector: 'button[wf-image-picker]' })
 export class ImagePickerDirective {
-  @Output() imageUrls = new EventEmitter();
+  @Output() imagePick = new EventEmitter();
 
   @Input() title?: string = 'Position auswählen';
   @Input() exampleImageUrl?: string = '';
@@ -29,7 +29,7 @@ export class ImagePickerDirective {
       showSecurityQuestion: this.showSecurityQuestion
     });
     modal.onDidDismiss(data => {
-      if (data) this.imageUrls.emit(data);
+      if (data) this.imagePick.emit(data);
     });
     modal.present();
   }

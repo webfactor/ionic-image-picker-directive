@@ -14,7 +14,7 @@ import { ImageServiceProvider } from '../../providers/image-service';
   templateUrl: 'image-picker-modal.html'
 })
 export class ImagePickerModalPage extends Translatable {
-  title: String = 'Position auswählen';
+  title: String = 'Bilder auswählen';
   exampleImageUrl: String = '';
   infoText: String = '';
   type: String = '';

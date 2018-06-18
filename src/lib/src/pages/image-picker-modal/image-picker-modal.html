@@ -7,7 +7,7 @@
       </button>
     </ion-buttons>
     <ion-buttons end>
-      <button ion-button icon-only (click)="acceptImage()" *ngIf="allImageUrls.length">
+      <button ion-button icon-only (click)="acceptImage()" *ngIf="allImageUrls?.length">
         <ion-icon name="checkmark"></ion-icon>
       </button>
     </ion-buttons>
@@ -18,16 +18,17 @@
 
 
 <ion-content>
-  <div>{{'pickImagesPage.example' | translate}}</div>
-  <img src="{{exampleImageUrl}}" class="example" *ngIf="exampleImageUrl && exampleImageUrl.length" />
+  <div *ngIf="exampleImageUrl && exampleImageUrl?.length">
+    <div>{{'pickImagesPage.example' | translate}}</div>
+    <img src="{{exampleImageUrl}}" class="example" />
+  </div>
   <div *ngIf="infoText && infoText.length">{{infoText}} </div>
 
 
   <div bottom ion-grid>
     <ion-row>
       <ion-col>
-        <button ion-button full (click)="takeImage()" *ngIf="takeImageUrls.length > 0">{{'pickImagesPage.takeNewImage' | translate}}</button>
-        <button ion-button full (click)="takeImage()" *ngIf="takeImageUrls.length == 0">{{'pickImagesPage.takeImage' | translate}}</button>
+        <button ion-button full (click)="takeImage()">{{'pickImagesPage.takeImage' | translate}}</button>
       </ion-col>
       <ion-col>
         <button ion-button full (click)="pickImage()">{{'pickImagesPage.pickImage' | translate}}</button>

@@ -20,6 +20,9 @@
     "@ionic-native/camera": "^4.7.0",
     "com.synconset.imagepicker": "^2.1.10",
     "@webfactor/ionic-alert-service": "^3.0.1",
-    "ionic-angular": "3.9.2"
+    "ionic-angular": "3.9.2",
+    "@webfactor/ionic-translatable": "3.0.1",
+    "@ionic-native/image-picker": "4.7.0"
+
   }
 }

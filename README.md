@@ -1,27 +1,130 @@
-# IonicImagePickerDirective
+# IonicPositionPickerDirective
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.4.
+Adds positionpicker functionality to any button.  
+Use `[wf-image-picker]` attribute on any `<button>` element.
 
-## Development server
+## Installation
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- Install `npm i @webfactor/ionic-image-picker-directive`.
+- Install `ionic cordova plugin add cordova-plugin-camera`.
+- Install `ionic cordova plugin add cordova-plugin-telerik-imagepicker`.
+- Add `ImagePickerDirectiveModule` to your Ionic module imports.
+- Add `ImagePickerService`to your Ionic providers
+- Add `Camera`to your Ionic providers
+- Add `ImagePicker` to your Ionic providers
+- Add `AlertService` to your Ionic providers
 
-## Code scaffolding
+- If button don´t react to clickevents add `ImagePickerDirectiveModule` to your Ionic Page module imports.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## I/O
 
-## Build
+```typescript
+title?: string
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Default: `Bilder auswählen`. Title of ImagePickerModal.
 
-## Running unit tests
+```typescript
+exampleImageUrl?: string
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Default: ''. Show link to imageUrl than is shown about the Buttons
 
-## Running end-to-end tests
+```typescript
+infoText?: string
+```
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Default: ''. Describe Image or show Informationtext
 
-## Further help
+```typescript
+optionsCamera?: CameraOptions = {
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+quality?: number;
+
+Picture quality in range 0-100. Default is 50
+
+destinationType?: number;
+
+DATA_URL : 0, Return image as base64-encoded string,
+FILE_URI : 1, Return image file URI,
+NATIVE_URI : 2 Return image native URI
+
+sourceType?: number;
+
+PHOTOLIBRARY : 0,
+CAMERA : 1,
+SAVEDPHOTOALBUM : 2
+
+allowEdit?: boolean;
+Allow simple editing of image before selection.
+
+encodingType?: number;
+Defined in Camera.EncodingType. Default is JPEG
+JPEG : 0 Return JPEG encoded image
+PNG : 1 Return PNG encoded image
+
+targetWidth?: number;
+Width in pixels to scale image. Must be used with targetHeight.
+Aspect ratio remains constant.
+
+targetHeight?: number;
+Height in pixels to scale image. Must be used with targetWidth.
+
+
+mediaType?: number;
+Set the type of media to select from. Only works when PictureSourceType
+is PHOTOLIBRARY or SAVEDPHOTOALBUM. Defined in Camera.MediaType
+PICTURE: 0 allow selection of still pictures only. DEFAULT.
+Will return format specified via DestinationType
+VIDEO: 1 allow selection of video only, WILL ALWAYS RETURN FILE_URI
+ALLMEDIA : 2 allow selection from all media types
+
+correctOrientation?: boolean;
+Rotate the image to correct for the orientation of the device during capture.
+
+saveToPhotoAlbum?: boolean;
+Save the image to the photo album on the device after capture.
+
+cameraDirection?: number;
+Defined in Camera.Direction. Default is BACK.
+BACK: 0
+FRONT: 1
+
+popoverOptions?: CameraPopoverOptions;
+iOS-only options that specify popover location in iPad. Defined in CameraPopoverOptions.
+}
+```
+
+```typescript
+optionsImagePicker?: ImagePickerOption = {
+
+maximumImagesCount?: number; max images to be selected, defaults to 15. If this is set to 1, upon selection of a single image, the plugin will return it. (Android only)
+width?: number; Max width to allow images to be
+height?: number; Max height to allow images to be
+quality?: number; Quality of images, defaults to 100
+outputType?: number; Output type, defaults to 0  (FILE_URI). 1 is (BASE64_String)
+
+}
+```
+
+```typescript
+showSecurityQuestion : boolean;
+Show SecurityQuestion when accept-Button is pressed
+```
+
+```typescript
+imagePick;
+```
+
+Emits when the user click on accept button. _$event_ holds the imageUrl data.
+The Object contails the imageUrls and if exist the type.
+
+## Example
+
+```html
+<button ion-button
+wf-image-picker
+(positionPick)="pick($event)">
+Image hinzufügen
+</button>
+```
