@@ -7,8 +7,6 @@ const rollupGlobals = {
   '@webfactor/ionic-alert-service': '@webfactor/ionic-alert-service',
   'ionic-angular': 'ionic-angular',
 
-
-
   'date-fns': 'date.fns',
   'codemirror': 'codemirror',
   'ng2-nouislider/src/nouislider': 'nouislider',
