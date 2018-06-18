@@ -9,12 +9,19 @@ Use `[wf-image-picker]` attribute on any `<button>` element.
 - Install `ionic cordova plugin add cordova-plugin-camera`.
 - Install `ionic cordova plugin add cordova-plugin-telerik-imagepicker`.
 - Add `ImagePickerDirectiveModule` to your Ionic module imports.
-- Add `ImagePickerService`to your Ionic providers
+- Add `TranslateModule.forRoot()` to your Ionic module imports.
+- Add `ImageServiceProvider`to your Ionic providers
 - Add `Camera`to your Ionic providers
 - Add `ImagePicker` to your Ionic providers
 - Add `AlertService` to your Ionic providers
+- Add `TranslateService` to your Ionic providers
+- Install npm install --save @ionic-native/camera
+- Install npm Install --save @webfactor/ionic-alert-service
+- install npm install --save @ionic-native/image-picker
+- install npm i @ngx-translate/core
+-
 
-- If button don´t react to clickevents add `ImagePickerDirectiveModule` to your Ionic Page module imports.
+* If button don´t react to clickevents add `ImagePickerDirectiveModule` to your Ionic Page module imports.
 
 ## I/O
 
