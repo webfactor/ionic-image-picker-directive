@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { CameraOptions } from '@ionic-native/camera';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import { ImagePickerOptions } from '@ionic-native/image-picker';
+import { TranslateService } from '@ngx-translate/core';
+import { AlertService } from '@webfactor/ionic-alert-service';
+import { Translatable } from '@webfactor/ionic-translatable';
 import { IonicPage, NavParams, ViewController } from 'ionic-angular';
 
 import { ImageServiceProvider } from '../../providers/image-service';
@@ -9,12 +13,18 @@ import { ImageServiceProvider } from '../../providers/image-service';
   selector: 'page-image-picker-modal',
   templateUrl: 'image-picker-modal.html'
 })
-export class ImagePickerModalPage {
+export class ImagePickerModalPage extends Translatable {
   exampleImageUrl: String = '';
   infoText: String = '';
   type: String = '';
-  options: CameraOptions = null;
-  imageUrls: String[] = [];
+  optionsCamera: CameraOptions = {
+    quality: 100,
+    destinationType: this.camera.DestinationType.FILE_URI,
+    encodingType: this.camera.EncodingType.JPEG,
+    mediaType: this.camera.MediaType.PICTURE
+  };
+  optionsImagePicker: ImagePickerOptions = { outputType: 0, quality: 100 };
+  showSecurityQuestion: boolean = true;
   takeImageUrls: String[] = [];
   pickImageUrls: String[] = [];
   allImageUrls: String[] = [];
@@ -22,8 +32,13 @@ export class ImagePickerModalPage {
   constructor(
     public viewCtrl: ViewController,
     public navParams: NavParams,
-    private imageService: ImageServiceProvider
+    private imageService: ImageServiceProvider,
+    private camera: Camera,
+    private alertService: AlertService,
+    protected translate: TranslateService
   ) {
+    super(translate);
+    this.getTranslations('pickImagePage');
     this.getInputs();
   }
 
@@ -38,7 +53,7 @@ export class ImagePickerModalPage {
   takeImage(): void {
     this.takeImageUrls = [];
     try {
-      this.imageService.takeImage().then(takeImageUrl => {
+      this.imageService.takeImage(this.optionsCamera).then(takeImageUrl => {
         if (takeImageUrl) this.allImageUrls.push(takeImageUrl);
       });
     } catch (error) {
@@ -48,7 +63,7 @@ export class ImagePickerModalPage {
 
   pickImage(): void {
     this.pickImageUrls = [];
-    this.imageService.pickImage().then(
+    this.imageService.pickImage(this.optionsImagePicker).then(
       pickImageUrl => {
         let oldImageIndex = this.allImageUrls.length > 0 ? this.allImageUrls.length : 0;
         let pickImageUrlIndex = 0;
@@ -63,6 +78,23 @@ export class ImagePickerModalPage {
     );
   }
 
+  acceptImage(): void {
+    if (this.showSecurityQuestion) {
+      this.alertService.confirm(this.translations.alertMessage, this.translations.alertTitle).then(
+        () => {
+          let data = { imageUrls: this.allImageUrls, type: this.type };
+          this.dismiss(data);
+        },
+        err => {
+          this.takeImage();
+        }
+      );
+    } else {
+      let data = { imageUrls: this.allImageUrls, type: this.type };
+      this.dismiss(data);
+    }
+  }
+
   deleteImage(imageUrl: String): void {
     this.allImageUrls.splice(this.allImageUrls.indexOf(imageUrl), 1);
   }
@@ -71,6 +103,8 @@ export class ImagePickerModalPage {
     this.exampleImageUrl = this.navParams.data.exampleImageUrl;
     this.infoText = this.navParams.data.infoText;
     this.type = this.navParams.data.type;
-    this.options = this.navParams.data.options;
+    this.optionsCamera = this.navParams.data.optionsCamera;
+    this.optionsImagePicker = this.navParams.data.optionsImagePicker;
+    this.showSecurityQuestion = this.navParams.data.showSecurityQuestion;
   }
 }

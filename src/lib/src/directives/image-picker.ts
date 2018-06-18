@@ -14,6 +14,7 @@ export class PositionPickerDirective {
   @Input() infoText?: string = '';
   @Input() optionsCamera?: CameraOptions = null;
   @Input() optionsImagePicker?: ImagePickerOptions = null;
+  @Input() showSecurityQuestion?: boolean = true;
 
   constructor(private modalCtrl: ModalController) {}
 
@@ -21,11 +22,11 @@ export class PositionPickerDirective {
   presentPositionPickerModal() {
     let modal = this.modalCtrl.create(ImagePickerModalPage, {
       title: this.title,
-
       exampleImageUrl: this.exampleImageUrl,
       infoText: this.infoText,
       optionsCamera: this.optionsCamera,
-      optionsImagePicker: this.optionsImagePicker
+      optionsImagePicker: this.optionsImagePicker,
+      showSecurityQuestion: this.showSecurityQuestion
     });
     modal.onDidDismiss(data => {
       if (data) this.imageUrls.emit(data);

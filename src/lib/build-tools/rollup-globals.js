@@ -1,4 +1,14 @@
 const rollupGlobals = {
+
+  '@ionic-native/camera': '@ionic-native/camera',
+  '@ngx-translate/core': '@ngx-translate/core',
+  '@webfactor/ionic-translatable': '@webfactor/ionic-translatable',
+  '@ionic-native/image-picker': '@ionic-native/image-picker',
+  '@webfactor/ionic-alert-service': '@webfactor/ionic-alert-service',
+  'ionic-angular': 'ionic-angular',
+
+
+
   'date-fns': 'date.fns',
   'codemirror': 'codemirror',
   'ng2-nouislider/src/nouislider': 'nouislider',

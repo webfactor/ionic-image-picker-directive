@@ -17,17 +17,17 @@
 </ion-header>
 
 
-<ion-content >
+<ion-content>
   <div>{{'pickImagesPage.example' | translate}}</div>
-  <img src="{{exampleImageUrl}}" class="example" />
-  <div>{{infoText}}</div>
+  <img src="{{exampleImageUrl}}" class="example" *ngIf="exampleImageUrl && exampleImageUrl.length" />
+  <div *ngIf="infoText && infoText.length">{{infoText}} </div>
 
 
   <div bottom ion-grid>
     <ion-row>
       <ion-col>
-        <button ion-button full (click)="takeImage()" *ngIf="imageUrls">{{'pickImagesPage.takeNewImage' | translate}}</button>
-        <button ion-button full (click)="takeImage()" *ngIf="!imageUrls">{{'pickImagesPage.takeImage' | translate}}</button>
+        <button ion-button full (click)="takeImage()" *ngIf="takeImageUrls.length > 0">{{'pickImagesPage.takeNewImage' | translate}}</button>
+        <button ion-button full (click)="takeImage()" *ngIf="takeImageUrls.length == 0">{{'pickImagesPage.takeImage' | translate}}</button>
       </ion-col>
       <ion-col>
         <button ion-button full (click)="pickImage()">{{'pickImagesPage.pickImage' | translate}}</button>
@@ -36,6 +36,6 @@
   </div>
 
   <div *ngFor="let allImageUrl of allImageUrls" (click)="deleteImage(allImageUrl)">
-    <img src="{{allImageUrl}}"/>
+    <img src="{{allImageUrl}}" />
   </div>
 </ion-content>
