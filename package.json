@@ -27,7 +27,7 @@
     "@ionic-native/camera": "^4.7.0",
     "@ionic-native/core": "^4.7.0",
     "@ionic-native/image-picker": "^4.7.0",
-    "@ngx-translate/core": "^10.0.2",
+    "@ngx-translate/core": "^9.1.1",
     "@webfactor/ionic-alert-service": "^3.0.1",
     "@webfactor/ionic-translatable": "^3.0.1",
     "core-js": "^2.4.1",

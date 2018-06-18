@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { CameraOptions } from '@ionic-native/camera';
 import { ImagePickerOptions } from '@ionic-native/image-picker';
 import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from '@webfactor/ionic-alert-service';
-import { Translatable } from '@webfactor/ionic-translatable';
 import { IonicPage, NavParams, ViewController } from 'ionic-angular';
 
+import { ModalText } from '../../model/modalText';
 import { ImageServiceProvider } from '../../providers/image-service';
 
 @IonicPage()
@@ -13,18 +13,20 @@ import { ImageServiceProvider } from '../../providers/image-service';
   selector: 'page-image-picker-modal',
   templateUrl: 'image-picker-modal.html'
 })
-export class ImagePickerModalPage extends Translatable {
-  title: String = 'Bilder auswählen';
+export class ImagePickerModalPage {
   exampleImageUrl: String = '';
   infoText: String = '';
   type: String = '';
-  optionsCamera: CameraOptions = {
-    quality: 100,
-    destinationType: this.camera.DestinationType.FILE_URI,
-    encodingType: this.camera.EncodingType.JPEG,
-    mediaType: this.camera.MediaType.PICTURE
+  modalText: ModalText = {
+    title: 'Bilder auswählen',
+    pickImageButton: 'Bild auswählen',
+    takeImageButton: 'Bild machen',
+    alertTitle: 'Bilder ok?',
+    alertMessage: 'Ist die Qualität der/des Bild(es) in Ordnung?'
   };
-  optionsImagePicker: ImagePickerOptions = { outputType: 0, quality: 100 };
+
+  optionsTakeImage: CameraOptions = null;
+  optionsImagePicker: ImagePickerOptions = null;
   showSecurityQuestion: boolean = true;
 
   allImageUrls: String[] = [];
@@ -33,26 +35,23 @@ export class ImagePickerModalPage extends Translatable {
     public viewCtrl: ViewController,
     public navParams: NavParams,
     private imageService: ImageServiceProvider,
-    private camera: Camera,
     private alertService: AlertService,
     protected translate: TranslateService
   ) {
-    super(translate);
-    this.getTranslations('pickImagePage');
     this.getInputs();
   }
 
-  dismiss(data: any) {
+  protected dismiss(data: any) {
     this.viewCtrl.dismiss(data);
   }
 
-  cancel() {
+  protected cancel() {
     this.viewCtrl.dismiss();
   }
 
-  takeImage(): void {
+  private takeImage(): void {
     try {
-      this.imageService.takeImage(this.optionsCamera).then(takeImageUrl => {
+      this.imageService.takeImage(this.optionsTakeImage).then(takeImageUrl => {
         if (takeImageUrl) this.allImageUrls.push(takeImageUrl);
       });
     } catch (error) {
@@ -60,7 +59,7 @@ export class ImagePickerModalPage extends Translatable {
     }
   }
 
-  pickImage(): void {
+  protected pickImage(): void {
     this.imageService.pickImage(this.optionsImagePicker).then(
       pickImageUrl => {
         let oldImageIndex = this.allImageUrls.length > 0 ? this.allImageUrls.length : 0;
@@ -76,9 +75,9 @@ export class ImagePickerModalPage extends Translatable {
     );
   }
 
-  acceptImage(): void {
+  protected acceptImage(): void {
     if (this.showSecurityQuestion) {
-      this.alertService.confirm(this.translations.alertMessage, this.translations.alertTitle).then(
+      this.alertService.confirm(this.modalText.alertMessage, this.modalText.alertTitle).then(
         () => {
           let data = { imageUrls: this.allImageUrls, type: this.type };
           this.dismiss(data);
@@ -93,17 +92,17 @@ export class ImagePickerModalPage extends Translatable {
     }
   }
 
-  deleteImage(imageUrl: String): void {
+  protected deleteImage(imageUrl: String): void {
     this.allImageUrls.splice(this.allImageUrls.indexOf(imageUrl), 1);
   }
 
-  getInputs(): void {
-    this.title = this.navParams.data.title;
+  private getInputs(): void {
     this.exampleImageUrl = this.navParams.data.exampleImageUrl;
     this.infoText = this.navParams.data.infoText;
-    this.type = this.navParams.data.type;
-    this.optionsCamera = this.navParams.data.optionsCamera;
+    this.optionsTakeImage = this.navParams.data.optionsTakeImage;
     this.optionsImagePicker = this.navParams.data.optionsImagePicker;
+    this.modalText = this.navParams.data.modalText;
+    this.type = this.navParams.data.type;
     this.showSecurityQuestion = this.navParams.data.showSecurityQuestion;
   }
 }

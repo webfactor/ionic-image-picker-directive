@@ -1,6 +1,6 @@
-# IonicPositionPickerDirective
+# IonicImagePickerDirective
 
-Adds positionpicker functionality to any button.  
+Adds imagepicker functionality to any button.  
 Use `[wf-image-picker]` attribute on any `<button>` element.
 
 ## Installation
@@ -124,7 +124,7 @@ The Object contails the imageUrls and if exist the type.
 ```html
 <button ion-button
 wf-image-picker
-(positionPick)="pick($event)">
+(imagePick)="pick($event)">
 Image hinzufügen
 </button>
 ```
