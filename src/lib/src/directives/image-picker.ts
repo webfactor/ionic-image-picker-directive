@@ -6,7 +6,7 @@ import { ModalController } from 'ionic-angular';
 import { ImagePickerModalPage } from '../pages/image-picker-modal/image-picker-modal';
 
 @Directive({ selector: 'button[wf-image-picker]' })
-export class PositionPickerDirective {
+export class ImagePickerDirective {
   @Output() imageUrls = new EventEmitter();
 
   @Input() title?: string = 'Position auswählen';

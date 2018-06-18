@@ -14,6 +14,7 @@ import { ImageServiceProvider } from '../../providers/image-service';
   templateUrl: 'image-picker-modal.html'
 })
 export class ImagePickerModalPage extends Translatable {
+  title: String = 'Position auswählen';
   exampleImageUrl: String = '';
   infoText: String = '';
   type: String = '';
@@ -25,8 +26,7 @@ export class ImagePickerModalPage extends Translatable {
   };
   optionsImagePicker: ImagePickerOptions = { outputType: 0, quality: 100 };
   showSecurityQuestion: boolean = true;
-  takeImageUrls: String[] = [];
-  pickImageUrls: String[] = [];
+
   allImageUrls: String[] = [];
 
   constructor(
@@ -51,7 +51,6 @@ export class ImagePickerModalPage extends Translatable {
   }
 
   takeImage(): void {
-    this.takeImageUrls = [];
     try {
       this.imageService.takeImage(this.optionsCamera).then(takeImageUrl => {
         if (takeImageUrl) this.allImageUrls.push(takeImageUrl);
@@ -62,7 +61,6 @@ export class ImagePickerModalPage extends Translatable {
   }
 
   pickImage(): void {
-    this.pickImageUrls = [];
     this.imageService.pickImage(this.optionsImagePicker).then(
       pickImageUrl => {
         let oldImageIndex = this.allImageUrls.length > 0 ? this.allImageUrls.length : 0;
@@ -100,6 +98,7 @@ export class ImagePickerModalPage extends Translatable {
   }
 
   getInputs(): void {
+    this.title = this.navParams.data.title;
     this.exampleImageUrl = this.navParams.data.exampleImageUrl;
     this.infoText = this.navParams.data.infoText;
     this.type = this.navParams.data.type;
